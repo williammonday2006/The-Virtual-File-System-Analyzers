@@ -20,21 +20,16 @@ public class Main {
         root.addItem(documents);
         root.addItem(pictures);
 
-        FileSystemAnalyzer.printHierarchy(root, "");
+        int recursiveCount = FileSystemAnalyzer.countFilesRecursive(root);
+        int iterativeCount = FileSystemAnalyzer.countFilesIterative(root);
 
-        int fileCount = FileSystemAnalyzer.countFilesRecursive(root);
-        int totalSize = FileSystemAnalyzer.calculateTotalSizeRecursive(root);
-        FileItem largest = FileSystemAnalyzer.findLargestFileRecursive(root);
+        System.out.println("Recursive file count: " + recursiveCount);
+        System.out.println("Iterative file count: " + iterativeCount);
 
-        System.out.println();
-        System.out.println("Total files: " + fileCount);
-        System.out.println("Total storage: " + totalSize + " KB");
-
-        if (largest != null) {
-            System.out.println("Largest file: " + largest.getName());
-            System.out.println("Largest file size: " + largest.getSizeInKB() + " KB");
+        if (recursiveCount == iterativeCount) {
+            System.out.println("Verification: Counts match.");
         } else {
-            System.out.println("No files found.");
+            System.out.println("Verification: Counts do not match.");
         }
     }
 }

@@ -1,3 +1,6 @@
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class FileSystemAnalyzer {
 
     public static int countFilesRecursive(FileSystemItem item) {
@@ -48,6 +51,29 @@ public class FileSystemAnalyzer {
         }
 
         return largest;
+    }
+
+    public static int countFilesIterative(Folder rootFolder) {
+        Deque<FileSystemItem> stack = new ArrayDeque<>();
+        stack.push(rootFolder);
+
+        int fileCount = 0;
+
+        while (!stack.isEmpty()) {
+            FileSystemItem item = stack.pop();
+
+            if (item instanceof FileItem) {
+                fileCount++;
+            } else {
+                Folder folder = (Folder) item;
+
+                for (FileSystemItem child : folder.getItems()) {
+                    stack.push(child);
+                }
+            }
+        }
+
+        return fileCount;
     }
 
     public static void printHierarchy(FileSystemItem item, String indent) {

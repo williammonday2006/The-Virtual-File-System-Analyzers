@@ -90,4 +90,22 @@ public class FileSystemAnalyzer {
             printHierarchy(child, indent + "  ");
         }
     }
+
+    public static Folder findFolder(Folder current, String targetName) {
+        if (current.getName().equalsIgnoreCase(targetName)) {
+            return current;
+        }
+
+        for (FileSystemItem item : current.getItems()) {
+            if (item instanceof Folder) {
+                Folder result = findFolder((Folder) item, targetName);
+
+                if (result != null) {
+                    return result;
+                }
+            }
+        }
+
+        return null;
+    }
 }
